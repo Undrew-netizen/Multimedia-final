@@ -93,7 +93,7 @@ z-index: 100%;
 }
 .details-cover{
      background: rgba(0, 0, 0, 0.09);
-    height: 25vh;
+    height: 33vh;
     
 }
  .add-button{
@@ -133,7 +133,7 @@ z-index: 100%;
     color: black;
     cursor: pointer;
     height: 3vh;
-    width: 12vw;
+    width: 10vw;
     border: 1px solid black;
     align-items: center;
     text-align: center;
