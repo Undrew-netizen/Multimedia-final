@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Always reload cart fresh from localStorage
+    // =========================
+    // CART STORAGE FUNCTIONS
+    // =========================
     function getCart() {
         return JSON.parse(localStorage.getItem("cart")) || [];
     }
@@ -30,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!nameEl || !priceEl) return;
 
             const name = nameEl.textContent.trim();
-
-            
             const price = priceEl.textContent
                 .replace("KSH", "")
                 .replace(",", "")
@@ -42,14 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const item = { name, price, image };
 
             let cart = getCart();
-
             cart.push(item);
-
             saveCart(cart);
 
             updateCartCount();
 
-            // Button animation
             const originalHTML = button.innerHTML;
             button.innerHTML = "Added ✓";
             button.disabled = true;
@@ -67,21 +64,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // UPDATE CART COUNT
     // =========================
     function updateCartCount() {
-
         const cart = getCart();
 
         cartCounts.forEach(span => {
-
             span.textContent = cart.length;
-
             span.classList.add("pop");
 
             setTimeout(() => {
                 span.classList.remove("pop");
             }, 200);
-
         });
-
     }
 
     // =========================
@@ -111,3 +103,49 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
+
+// =======================================
+// 🌊 WAVE ANIMATION (p5.js)
+// =======================================
+
+let yoff = 0;
+
+function setup() {
+
+    const container = document.getElementById("wave-container");
+    if (!container) return;
+
+    let canvas = createCanvas(window.innerWidth, 250);
+    canvas.parent("wave-container");
+}
+
+function draw() {
+
+    if (!document.getElementById("wave-container")) return;
+
+    clear();
+    noStroke();
+
+    fill(0, 150, 255, 180);
+
+    beginShape();
+
+    let xoff = 0;
+
+    for (let x = 0; x <= width; x += 10) {
+        let y = map(noise(xoff, yoff), 0, 1, 100, 200);
+        vertex(x, y);
+        xoff += 0.05;
+    }
+
+    yoff += 0.01;
+
+    vertex(width, height);
+    vertex(0, height);
+    endShape(CLOSE);
+}
+
+function windowResized() {
+    resizeCanvas(window.innerWidth, 250);
+}
